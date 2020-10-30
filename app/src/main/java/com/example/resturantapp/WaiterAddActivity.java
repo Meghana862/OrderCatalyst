@@ -56,9 +56,9 @@ public class WaiterAddActivity extends AppCompatActivity {
         name = findViewById(R.id.name_edit);
         mobile = findViewById(R.id.mobile_edit);
         aadhaar = findViewById(R.id.aadhaar_edit);
-        //pan = findViewById(R.id.pass_edit);
+        pan = findViewById(R.id.pass_edit);
         password=findViewById(R.id.pass_edit);
-        pan=findViewById(R.id.pass_edit);
+        pan=findViewById(R.id.pan_edit);
         submitBtn = findViewById(R.id.sub_btn);
 
         db = FirebaseFirestore.getInstance();
@@ -84,10 +84,10 @@ public class WaiterAddActivity extends AppCompatActivity {
         String waiterName = name.getText().toString().trim();
         String waiterPhone = mobile.getText().toString().trim();
         String waiterAadhaar = aadhaar.getText().toString().trim();
-        //String waiterPan = pan.getText().toString().trim();
+        String waiterPan = pan.getText().toString().trim();
         String waiterPass = password.getText().toString().trim();
 
-        if (TextUtils.isEmpty(waiterEmail)||TextUtils.isEmpty(waiterName)||TextUtils.isEmpty(waiterAadhaar)||TextUtils.isEmpty(waiterPass)) {
+        if (TextUtils.isEmpty(waiterEmail)||TextUtils.isEmpty(waiterName)||TextUtils.isEmpty(waiterAadhaar)||TextUtils.isEmpty(waiterPass)||TextUtils.isEmpty(waiterPan)) {
             Toast.makeText(this, "Please enter all credentials", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -105,12 +105,13 @@ public class WaiterAddActivity extends AppCompatActivity {
         final String waiterPhonest = "" + waiterPhone;
         final String waiterAadhaarst = "" + waiterAadhaar;
         final String waiterPassst = "" + waiterPass;
+        final String waiterPanst = "" + waiterPan;
 
-        checking(w_timestamp,waiterNamest,waiterEmailst,waiterPhonest,waiterAadhaarst,waiterPassst,firebaseAuth.getCurrentUser().getUid());
+        checking(w_timestamp,waiterNamest,waiterEmailst,waiterPhonest,waiterAadhaarst,waiterPassst,firebaseAuth.getCurrentUser().getUid(),waiterPan);
 
     }
 
-    public void checking(final String id, final String name, final String email, final String phone, final String aadhaar,final String pass,final String added) {
+    public void checking(final String id, final String name, final String email, final String phone, final String aadhaar,final String pass,final String added,final String pan) {
 
         /*firebaseAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(WaiterAddActivity.this, new OnCompleteListener<AuthResult>() {
@@ -136,38 +137,46 @@ public class WaiterAddActivity extends AppCompatActivity {
                                             }
                                         }
                                         if (flag[0] == 0) {
-
                                             final HashMap<String, String> hashMap1 = new HashMap<>();
-                                            hashMap1.put("waiterId", id);
-                                            hashMap1.put("waiterName", name);
-                                            hashMap1.put("waiterEmail", email);
-                                            hashMap1.put("waiterPhone", phone);
-                                            hashMap1.put("waiterAadhaar", aadhaar);
-                                            hashMap1.put("waiterPassword", pass);
-                                            hashMap1.put("addedBy", added);
-                                            hashMap1.put("currentId",""+firebaseAuth.getInstance().getUid());
 
-                                            db.collection("waiters").document(firebaseAuth.getInstance().getUid()).set(hashMap1)
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,pass)
+                                                    .addOnCompleteListener(WaiterAddActivity.this, new OnCompleteListener<AuthResult>() {
                                                         @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            progressDialog.dismiss();
-                                                            Toast.makeText(WaiterAddActivity.this, "Waiter Added", Toast.LENGTH_SHORT).show();
-                                                            addWaiterLocal(name,email,phone,aadhaar,pass,id);
-                                                            FirebaseAuth.getInstance().signOut();
-                                                            //FirebaseAuth.getInstance().signInWithEmailAndPassword(adEmail,adPass);
-                                                            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,pass);
-                                                            startActivity(new Intent(WaiterAddActivity.this, WaitersListActivity.class));
-                                                            finish();
+                                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                                            if (task.isSuccessful())
+                                                            //hashMap1.put("waiterId", id);
+                                                            hashMap1.put("waiterName", name);
+                                                            hashMap1.put("waiterEmail", email);
+                                                            hashMap1.put("waiterPhone", phone);
+                                                            hashMap1.put("waiterAadhaar", aadhaar);
+                                                            hashMap1.put("waiterPassword", pass);
+                                                            hashMap1.put("waiterPan", pan);
+                                                            //hashMap1.put("addedBy", added);
+                                                            hashMap1.put("waiterId", "" + firebaseAuth.getInstance().getUid());
+                                                            db.collection("waiters").document(firebaseAuth.getInstance().getUid()).set(hashMap1)
+                                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                        @Override
+                                                                        public void onSuccess(Void aVoid) {
+                                                                            progressDialog.dismiss();
+                                                                            Toast.makeText(WaiterAddActivity.this, "Waiter Added", Toast.LENGTH_SHORT).show();
+                                                                            addWaiterLocal(name, email, phone, aadhaar, pass, id);
+                                                                            //FirebaseAuth.getInstance().signOut();
+                                                                            //FirebaseAuth.getInstance().signInWithEmailAndPassword(adEmail,adPass);
+                                                                            //FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pass);
+                                                                            startActivity(new Intent(WaiterAddActivity.this, WaitersListActivity.class));
+                                                                            finish();
 
+                                                                        }
+                                                                    })
+                                                                    .addOnFailureListener(new OnFailureListener() {
+                                                                        @Override
+                                                                        public void onFailure(@NonNull Exception e) {
+                                                                            progressDialog.dismiss();
+                                                                            Toast.makeText(WaiterAddActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                    });
                                                         }
-                                                    })
-                                                    .addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            progressDialog.dismiss();
-                                                            Toast.makeText(WaiterAddActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                        }
+
                                                     });
                                         }
 

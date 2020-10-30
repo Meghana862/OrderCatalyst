@@ -63,7 +63,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else if(password1.length()>=6){
                     //registerUser(email1,password1);
-                    loginUser(email1,password1);
+                    if(role.equals("Admin")){
+                        loginUser1(email1,password1);
+                    }
+                    else{
+                        loginUser2(email1,password1);
+                    }
                 }
                 else{
                     Toast.makeText(LoginActivity.this,"Enter 5+ character password", Toast.LENGTH_SHORT).show();
@@ -81,13 +86,25 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void loginUser(String email1,String password1){
+    private void loginUser1(String email1,String password1){
         auth.signInWithEmailAndPassword(email1,password1)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(LoginActivity.this,"Login Successful",Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(LoginActivity.this,WaitersListActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+    }
+    private void loginUser2(String email1,String password1){
+        auth.signInWithEmailAndPassword(email1,password1)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        Toast.makeText(LoginActivity.this,"Login Successful",Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(LoginActivity.this,TablesListActivity.class);
                         startActivity(intent);
                         finish();
                     }

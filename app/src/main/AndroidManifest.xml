@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WaiterEditActivity"></activity>
+        <activity android:name=".OTPActivity"></activity>
+        <activity android:name=".CustomerDetailsActivity" />
+        <activity android:name=".TablesListActivity" />
+        <activity android:name=".WaiterEditActivity" />
         <activity android:name=".WaiterAddActivity" />
         <activity android:name=".WaitersListActivity" />
         <activity android:name=".RegisterActivity" />
