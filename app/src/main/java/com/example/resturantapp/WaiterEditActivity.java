@@ -23,6 +23,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 
@@ -94,11 +95,11 @@ public class WaiterEditActivity extends AppCompatActivity {
                     for (final QueryDocumentSnapshot document : task.getResult()) {
                         if (waiterId.equals(document.getId())) {
                             email.setText(document.get("waiterEmail").toString());
-                            name.setText(document.get("waiterEmail").toString());
-                            mobile.setText(document.get("waiterEmail").toString());
-                            aadhaar.setText(document.get("waiterEmail").toString());
-                            pan.setText(document.get("waiterEmail").toString());
-                            password.setText(document.get("waiterEmail").toString());
+                            name.setText(document.get("waiterName").toString());
+                            mobile.setText(document.get("waiterPhone").toString());
+                            aadhaar.setText(document.get("waiterAadhaar").toString());
+                            pan.setText(document.get("waiterPan").toString());
+                            password.setText(document.get("waiterPassword").toString());
                         }
                     }
 
@@ -146,10 +147,12 @@ public class WaiterEditActivity extends AppCompatActivity {
         hashMap1.put("waiterPan", waiterPanst);
 
         final CollectionReference rootRef = FirebaseFirestore.getInstance().collection("waiters");
-        rootRef.document(waiterId).set(hashMap1).addOnSuccessListener(new OnSuccessListener<Void>() {
+        rootRef.document(waiterId).set(hashMap1, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(WaiterEditActivity.this, "Details Updated", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(WaiterEditActivity.this, WaitersListActivity.class));
+                finish();
 
             }
         })
@@ -169,6 +172,8 @@ public class WaiterEditActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Void aVoid) {
                     Toast.makeText(WaiterEditActivity.this,"Waiter Removed",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(WaiterEditActivity.this, WaitersListActivity.class));
+                    finish();
                 }
             })
                     .addOnFailureListener(new OnFailureListener() {

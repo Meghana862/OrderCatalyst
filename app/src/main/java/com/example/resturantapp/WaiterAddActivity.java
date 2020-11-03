@@ -84,7 +84,7 @@ public class WaiterAddActivity extends AppCompatActivity {
         String waiterName = name.getText().toString().trim();
         String waiterPhone = mobile.getText().toString().trim();
         String waiterAadhaar = aadhaar.getText().toString().trim();
-        String waiterPan = pan.getText().toString().trim();
+        final String waiterPan = pan.getText().toString().trim();
         String waiterPass = password.getText().toString().trim();
 
         if (TextUtils.isEmpty(waiterEmail)||TextUtils.isEmpty(waiterName)||TextUtils.isEmpty(waiterAadhaar)||TextUtils.isEmpty(waiterPass)||TextUtils.isEmpty(waiterPan)) {
@@ -107,11 +107,29 @@ public class WaiterAddActivity extends AppCompatActivity {
         final String waiterPassst = "" + waiterPass;
         final String waiterPanst = "" + waiterPan;
 
-        checking(w_timestamp,waiterNamest,waiterEmailst,waiterPhonest,waiterAadhaarst,waiterPassst,firebaseAuth.getCurrentUser().getUid(),waiterPan);
+
+        final CollectionReference rootRef1 = FirebaseFirestore.getInstance().collection("admins");
+        rootRef1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (final QueryDocumentSnapshot document : task.getResult()) {
+                        if (firebaseAuth.getCurrentUser().equals(document.getId())) {
+                            String adEmail=document.get("admin_email").toString();
+                            String adPass=document.get("admin_password").toString();
+                            checking(w_timestamp,waiterNamest,waiterEmailst,waiterPhonest,waiterAadhaarst,waiterPassst,firebaseAuth.getCurrentUser().getUid(),waiterPan,adEmail,adPass);
+                        }
+                    }
+
+                } else {
+                    Log.d("FAILED", "Error getting documents: ", task.getException());
+                }
+            }
+        });
 
     }
 
-    public void checking(final String id, final String name, final String email, final String phone, final String aadhaar,final String pass,final String added,final String pan) {
+    public void checking(final String id, final String name, final String email, final String phone, final String aadhaar, final String pass, final String added, final String pan, final String adEmail, final String adPass) {
 
         /*firebaseAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(WaiterAddActivity.this, new OnCompleteListener<AuthResult>() {
@@ -161,7 +179,9 @@ public class WaiterAddActivity extends AppCompatActivity {
                                                                             Toast.makeText(WaiterAddActivity.this, "Waiter Added", Toast.LENGTH_SHORT).show();
                                                                             addWaiterLocal(name, email, phone, aadhaar, pass, id);
                                                                             //FirebaseAuth.getInstance().signOut();
+                                                                            Log.d("waiter:",firebaseAuth.getCurrentUser().getUid());
                                                                             //FirebaseAuth.getInstance().signInWithEmailAndPassword(adEmail,adPass);
+                                                                            Log.d("admin:",firebaseAuth.getCurrentUser().getUid());
                                                                             //FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pass);
                                                                             startActivity(new Intent(WaiterAddActivity.this, WaitersListActivity.class));
                                                                             finish();

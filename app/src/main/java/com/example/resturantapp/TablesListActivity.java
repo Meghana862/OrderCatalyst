@@ -30,8 +30,10 @@ public class TablesListActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private FirebaseAuth firebaseAuth;
     private RecyclerView myrecyclerview;
+    private RecyclerView myrecyclerview1;
     private ArrayList<ModelTablesList> tablesLists;
     private AdapterTablesList adaptertablesList;
+    private AdapterEmptyTablesList adapteremptytablesList;
     private FloatingActionButton show_desc_Btn;
 
 
@@ -41,6 +43,7 @@ public class TablesListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tables_list);
 
         myrecyclerview = findViewById(R.id.usersRv111);
+        myrecyclerview1 = findViewById(R.id.usersRv);
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -50,11 +53,21 @@ public class TablesListActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         //Log.d("user:",firebaseAuth.getCurrentUser().getUid());
         tablesLists = new ArrayList<ModelTablesList>();
+
         adaptertablesList = new AdapterTablesList(TablesListActivity.this, tablesLists);
+        adapteremptytablesList = new AdapterEmptyTablesList(TablesListActivity.this, tablesLists);
+
         LinearLayoutManager llm = new LinearLayoutManager(TablesListActivity.this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
+
+        LinearLayoutManager llm1 = new LinearLayoutManager(TablesListActivity.this);
+        llm1.setOrientation(LinearLayoutManager.VERTICAL);
+
         myrecyclerview.setLayoutManager(llm);
         myrecyclerview.setAdapter(adaptertablesList);
+
+        myrecyclerview1.setLayoutManager(llm1);
+        myrecyclerview1.setAdapter(adaptertablesList);
 
         /*LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -80,9 +93,17 @@ public class TablesListActivity extends AppCompatActivity {
 
                         ModelTablesList model = new ModelTablesList(t_name, t_custId, t_waitId, t_status);
                         //WaitersList.getInstance().friends.add(waiter);
-                        tablesLists.add(model);
-                        adaptertablesList = new AdapterTablesList(TablesListActivity.this, tablesLists);
-                        myrecyclerview.setAdapter(adaptertablesList);
+                        if(t_status.equals("occupied")){
+                            tablesLists.add(model);
+                            adaptertablesList = new AdapterTablesList(TablesListActivity.this, tablesLists);
+                            myrecyclerview.setAdapter(adaptertablesList);
+                        }
+                        else{
+                            tablesLists.add(model);
+                            adapteremptytablesList = new AdapterEmptyTablesList(TablesListActivity.this, tablesLists);
+                            myrecyclerview1.setAdapter(adapteremptytablesList);
+
+                        }
                     }
                 }
                 else {

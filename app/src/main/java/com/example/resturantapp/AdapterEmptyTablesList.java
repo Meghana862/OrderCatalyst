@@ -12,25 +12,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class AdapterTablesList extends RecyclerView.Adapter<AdapterTablesList.HolderTablesList> {
+public class AdapterEmptyTablesList extends RecyclerView.Adapter<AdapterEmptyTablesList.HolderEmptyTablesList> {
 
     private Context context;
     private ArrayList<ModelTablesList> TablesList;
 
-    public AdapterTablesList(Context context, ArrayList<ModelTablesList> tablesList) {
+    public AdapterEmptyTablesList(Context context, ArrayList<ModelTablesList> tablesList) {
         this.context = context;
         this.TablesList = tablesList;
     }
 
     @NonNull
     @Override
-    public HolderTablesList onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_table, parent, false);
-        return new AdapterTablesList.HolderTablesList(view);
+    public AdapterEmptyTablesList.HolderEmptyTablesList onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.list_empty_tables, parent, false);
+        return new AdapterEmptyTablesList.HolderEmptyTablesList(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HolderTablesList holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterEmptyTablesList.HolderEmptyTablesList holder, int position) {
         ModelTablesList model = TablesList.get(position);
         final String t_name= model.getName();
         String t_status= model.getStatus();
@@ -53,12 +53,12 @@ public class AdapterTablesList extends RecyclerView.Adapter<AdapterTablesList.Ho
         return TablesList.size();
     }
 
-    class HolderTablesList extends RecyclerView.ViewHolder {
+    class HolderEmptyTablesList extends RecyclerView.ViewHolder {
 
         private TextView t_name;
         private TextView t_status;
 
-        public HolderTablesList(@NonNull View itemView) {
+        public HolderEmptyTablesList(@NonNull View itemView) {
             super(itemView);
 
             t_name = itemView.findViewById(R.id.table_name);

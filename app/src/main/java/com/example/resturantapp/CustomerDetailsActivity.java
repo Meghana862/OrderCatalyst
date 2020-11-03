@@ -72,7 +72,7 @@ public class CustomerDetailsActivity extends AppCompatActivity {
     public  void storeDetails(final String name, final String phone, final String aadhaar){
 
                             //addAdmin(email1,password1);
-                            FirebaseUser f_user = FirebaseAuth.getInstance().getCurrentUser();
+                            /*FirebaseUser f_user = FirebaseAuth.getInstance().getCurrentUser();
                             final String uid = f_user.getUid();
                             final HashMap<String, String> hashMap1 = new HashMap<>();
                             hashMap1.put("name", name);
@@ -88,6 +88,10 @@ public class CustomerDetailsActivity extends AppCompatActivity {
                                         public void onSuccess(Void aVoid) {
                                             Toast.makeText(CustomerDetailsActivity.this, "Customer Added", Toast.LENGTH_SHORT).show();
                                             Intent intent=new Intent(CustomerDetailsActivity.this,OTPActivity.class);
+                                            intent.putExtra("name",name );
+                                            intent.putExtra("phoneNo",phone);
+                                            intent.putExtra("aadhaarNo",aadhaar );
+                                            intent.putExtra("waiterId",firebaseAuth.getInstance().getUid());
                                             startActivity(intent);
                                             finish();
                                         }
@@ -97,6 +101,14 @@ public class CustomerDetailsActivity extends AppCompatActivity {
                                         public void onFailure(@NonNull Exception e) {
                                             Toast.makeText(CustomerDetailsActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
-                                    });
+                                    });*/
+        Toast.makeText(CustomerDetailsActivity.this, "Customer Added", Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(CustomerDetailsActivity.this,OTPActivity.class);
+        intent.putExtra("name",name );
+        intent.putExtra("phoneNo",phone);
+        intent.putExtra("aadhaarNo",aadhaar );
+        intent.putExtra("waiterId",firebaseAuth.getInstance().getUid());
+        startActivity(intent);
+        finish();
     }
 }

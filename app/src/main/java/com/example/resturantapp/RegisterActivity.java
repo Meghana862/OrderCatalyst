@@ -131,6 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
                             note.put("admin_mobile",number);
                             note.put("admin_aadhaar",aadhaar);
                             note.put("admin_pan",pan);
+                            note.put("admin_password",password1);
 
                             Log.d("uid ", uid);
                             db.collection("admins").document(uid).set(note)
