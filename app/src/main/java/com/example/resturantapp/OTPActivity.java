@@ -150,7 +150,7 @@ public class OTPActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(OTPActivity.this, "Customer Added", Toast.LENGTH_SHORT).show();
-                            Intent intent=new Intent(OTPActivity.this,OTPActivity.class);
+                            Intent intent=new Intent(OTPActivity.this,Menu.class);
                             startActivity(intent);
                             finish();
                         }

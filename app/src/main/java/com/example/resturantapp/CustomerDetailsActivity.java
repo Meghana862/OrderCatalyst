@@ -103,7 +103,7 @@ public class CustomerDetailsActivity extends AppCompatActivity {
                                         }
                                     });*/
         Toast.makeText(CustomerDetailsActivity.this, "Customer Added", Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(CustomerDetailsActivity.this,OTPActivity.class);
+        Intent intent=new Intent(CustomerDetailsActivity.this,Menu.class);
         intent.putExtra("name",name );
         intent.putExtra("phoneNo",phone);
         intent.putExtra("aadhaarNo",aadhaar );
