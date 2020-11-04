@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         email=findViewById(R.id.log_email);
         password=findViewById(R.id.log_password);
         register=findViewById(R.id.reg);
-        login=findViewById(R.id.login);
+        login=findViewById(R.id.loginOtp);
 
         radioGroup=findViewById(R.id.radioGroup2);
 
