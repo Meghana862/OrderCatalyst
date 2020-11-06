@@ -1,5 +1,6 @@
 package com.example.resturantapp;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -22,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button login;
     private EditText email;
     private EditText password;
+    private ActionBar actionBar;
 
     private RadioGroup radioGroup;
     private RadioButton radioButton;
@@ -36,7 +38,10 @@ public class LoginActivity extends AppCompatActivity {
         email=findViewById(R.id.log_email);
         password=findViewById(R.id.log_password);
         register=findViewById(R.id.reg);
-        login=findViewById(R.id.loginOtp);
+        login=findViewById(R.id.login);
+
+        actionBar = getSupportActionBar();
+        actionBar.hide();
 
         radioGroup=findViewById(R.id.radioGroup2);
 
