@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class AdapterCategorywiseItems extends RecyclerView.Adapter<com.example.r
 
         private Context context;
         private ArrayList<ModelCategorywiseItem> itemsList;
+        public ElegantNumberButton numberButton;
 
         public AdapterCategorywiseItems(Context context, ArrayList<ModelCategorywiseItem> itemsList) {
             this.context = context;
@@ -50,14 +52,14 @@ public class AdapterCategorywiseItems extends RecyclerView.Adapter<com.example.r
             }
         });*/
 
-            holder.actionButton1.setOnClickListener(new View.OnClickListener() {
+           /* holder.actionButton1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent=new Intent(context,WaiterEditActivity.class);
                     intent.putExtra("wId",id);
                     context.startActivity(intent);
                 }
-            });
+            });*/
         }
 
         @Override
@@ -69,14 +71,23 @@ public class AdapterCategorywiseItems extends RecyclerView.Adapter<com.example.r
 
             private TextView w_name;
             private TextView w_cost;
-            private FloatingActionButton actionButton1;
+            //private FloatingActionButton actionButton1;
+
 
             public HolderItemsList(@NonNull View itemView) {
                 super(itemView);
 
                 w_name = itemView.findViewById(R.id.waiter_name);
                 w_cost = itemView.findViewById(R.id.act_w_email);
-                actionButton1=itemView.findViewById(R.id.des_check_btn);
+               // actionButton1=itemView.findViewById(R.id.des_check_btn);
+                numberButton = (ElegantNumberButton)itemView.findViewById(R.id.quantityBtn);
+                 numberButton.setOnClickListener(new ElegantNumberButton.OnClickListener() {
+                     @Override
+                     public void onClick(View view) {
+                         String num=numberButton.getNumber();
+                     }
+                 });
+
 
 
             }

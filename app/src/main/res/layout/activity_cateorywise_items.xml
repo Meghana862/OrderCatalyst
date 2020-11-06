@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="10dp"
-            android:src="@drawable/ic_baseline_person_add_24"
+            android:src="@drawable/ic_baseline_check_24"
             app:backgroundTint="#ba5e16" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

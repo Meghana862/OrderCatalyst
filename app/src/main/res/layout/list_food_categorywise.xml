@@ -53,15 +53,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="top"
-            android:layout_marginLeft="319dp">
+            android:layout_marginLeft="250dp">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/des_check_btn"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                app:fabCustomSize="35dp"
-                app:backgroundTint="#ba5e16"
-                android:src="@drawable/ic_baseline_edit_24"/>
+            <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                android:id="@+id/quantityBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:finalNumber="15"
+                app:backGroundColor="#ba5e16"
+                ></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </RelativeLayout>

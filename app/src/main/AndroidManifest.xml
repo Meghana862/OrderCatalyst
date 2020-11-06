@@ -12,7 +12,13 @@
         <activity android:name=".CateorywiseItemsActivity"></activity>
         <activity android:name=".cartList" />
         <activity android:name=".foodList"></activity>
-        <activity android:name=".Menu"></activity>
+        <activity android:name=".Menu">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".OTPActivity" />
         <activity android:name=".CustomerDetailsActivity" />
         <activity android:name=".TablesListActivity" />
@@ -22,11 +28,7 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
