@@ -81,6 +81,7 @@ public class CustomerDetailsActivity extends AppCompatActivity {
     }
     public  void storeDetails(final String name, final String phone, final String aadhaar){
 
+
                             //addAdmin(email1,password1);
                             FirebaseUser f_user = FirebaseAuth.getInstance().getCurrentUser();
                             final String uid = f_user.getUid();

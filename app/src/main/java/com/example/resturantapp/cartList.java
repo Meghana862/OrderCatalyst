@@ -52,6 +52,7 @@ public class cartList extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    num1=0;
                     for (final QueryDocumentSnapshot document : task.getResult()) {
                         final String id=document.getId();
                         final String quantity=document.get("qantity").toString();
