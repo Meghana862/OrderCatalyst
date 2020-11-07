@@ -67,10 +67,6 @@
                 android:textColor="#ffffff"
                 android:textSize="25dp"
                  />
-                android:text="Total: "
-                android:textColor="#ffffff"
-                android:textSize="25dp"
-                />
 
             <Button
                 android:id="@+id/addItems"

@@ -33,7 +33,8 @@ public class AdapterEmptyTablesList extends RecyclerView.Adapter<AdapterEmptyTab
     public void onBindViewHolder(@NonNull AdapterEmptyTablesList.HolderEmptyTablesList holder, int position) {
         ModelTablesList model = TablesList.get(position);
         final String t_name= model.getName();
-        String t_status= model.getStatus();
+        final String t_status= model.getStatus();
+        final String time=model.getCustId();
 
         holder.t_name.setText(t_name);
         holder.t_status.setText(t_status);
@@ -41,9 +42,17 @@ public class AdapterEmptyTablesList extends RecyclerView.Adapter<AdapterEmptyTab
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context,CustomerDetailsActivity.class);
-                intent.putExtra("t_name",t_name);
-                context.startActivity(intent);
+                if(t_status.equals("occupied")){
+                    Intent intent=new Intent(context,cartList.class);
+                    intent.putExtra("time",time);
+                    intent.putExtra("t_name",t_name);
+                    context.startActivity(intent);
+                }
+                else{
+                    Intent intent=new Intent(context,CustomerDetailsActivity.class);
+                    intent.putExtra("t_name",t_name);
+                    context.startActivity(intent);
+                }
             }
         });
     }
