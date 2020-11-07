@@ -116,7 +116,7 @@ public class RangePickActivity extends AppCompatActivity {
         cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RangePickActivity.this,SessionsActivity.class);
+                Intent intent = new Intent(RangePickActivity.this, SessionsListActivity.class);
                 String date1=from_date.getText().toString();
                 String date2=to_date.getText().toString();
                 Log.d("date1",date1);

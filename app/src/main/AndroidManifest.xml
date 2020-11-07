@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".cart_display"></activity>
-        <activity android:name=".SessionsActivity" />
+        <activity android:name=".SessionsListActivity" />
         <activity android:name=".RangePickActivity" />
         <activity android:name=".CateorywiseItemsActivity" />
         <activity android:name=".cartList" />
