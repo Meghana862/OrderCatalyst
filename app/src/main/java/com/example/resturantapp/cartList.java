@@ -46,7 +46,7 @@ public class cartList extends AppCompatActivity {
         end=findViewById(R.id.endSession);
         total=findViewById(R.id.orderTotalTextView);
         final int num = find(time);
-        total.setText("Total"+num);
+        total.setText("Total:"+num);
 
         addItems.setOnClickListener(new View.OnClickListener() {
             @Override
