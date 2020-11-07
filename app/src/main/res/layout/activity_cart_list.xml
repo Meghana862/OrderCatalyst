@@ -41,8 +41,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/usersRv111"
@@ -52,6 +51,7 @@
                     tools:listitem="@layout/activity_cart_display">
 
                 </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -97,9 +97,7 @@
                         android:text="End Session"
                         android:textColor="#ffffff"
                         />
-                    />
 
-                </LinearLayout>
 
             </LinearLayout>
 
