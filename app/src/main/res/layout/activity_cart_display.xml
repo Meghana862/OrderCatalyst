@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".cart_display"
     android:layout_marginTop="1dp"
-    app:cardBackgroundColor="@color/cardview_light_background"
+   android:background="@drawable/back2"
     app:contentPadding="12dp">
 
     <RelativeLayout

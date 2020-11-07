@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-    android:background="@drawable/gradient_background"
+    android:background="@drawable/back2"
     android:scrollbarSize="36dp">
 
     <RadioGroup
@@ -24,11 +24,11 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="139dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="120dp"
+        android:layout_height="60dp"
+        android:gravity="center"
         android:text="Login"
         android:textColor="#fff"
-        android:textSize="36sp"
+        android:textSize="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -105,7 +105,7 @@
         android:id="@+id/radioGroup2"
         android:layout_width="171dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="18dp"
         android:layout_marginBottom="222dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/log_password"
@@ -117,6 +117,7 @@
             android:layout_width="154dp"
             android:layout_height="45dp"
             android:text="Admin"
+            android:textSize="18dp"
             android:textColor="#fff"
             android:onClick="checkBtn"/>
 
@@ -125,6 +126,7 @@
             android:layout_width="154dp"
             android:layout_height="50dp"
             android:text="Waiter"
+            android:textSize="18dp"
             android:textColor="#fff"
             android:onClick="checkBtn"
             android:checked="true"/>

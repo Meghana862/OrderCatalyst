@@ -7,7 +7,7 @@
     tools:context=".WaiterAddActivity"
     android:orientation="vertical"
     android:padding="50dp"
-    android:background="@drawable/gradient_background">
+    android:background="@drawable/back2">
 
     <LinearLayout
         android:layout_width="match_parent"
