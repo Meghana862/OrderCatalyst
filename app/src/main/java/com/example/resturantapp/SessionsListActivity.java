@@ -33,17 +33,27 @@ public class SessionsListActivity extends AppCompatActivity {
     private ArrayList<ModelSessionsList> sessionsLists;
     private AdapterSessionsList adaptersessionsList;
     private FloatingActionButton show_desc_Btn;
+    private String from_date,to_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sessions);
+
+        Intent iin=getIntent();
+        Bundle b=iin.getExtras();
+        if(b!=null){
+            from_date=(String)b.get("date1");
+            to_date=(String)b.get("date2");
+        }
         myrecyclerview = findViewById(R.id.usersRv111);
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setTitle("Sessions");
+        actionBar.setTitle(from_date+" - "+to_date);
+
+        Log.d("w_id:",firebaseAuth.getInstance().getUid());
 
         firebaseAuth = FirebaseAuth.getInstance();
         //Log.d("user:",firebaseAuth.getCurrentUser().getUid());
@@ -58,40 +68,65 @@ public class SessionsListActivity extends AppCompatActivity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myrecyclerview.setLayoutManager(llm);
         myrecyclerview.setAdapter(adapterwaitersList);*/
-        loadInfo();
+        loadInfo(from_date,to_date);
 
     }
 
-    private void loadInfo(){
+    private void loadInfo(String date1,String date2){
         //String user_id = FirebaseAuth.getInstance().toString();
-        CollectionReference rootref = FirebaseFirestore.getInstance().collection("customers");
-        rootref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()) {
-                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                        String date = doc.get("date").toString();
-                        String cust = doc.get("name").toString();
-                        String waitId = doc.get("waiterId").toString();
-                        String id = doc.getId();
-                        //String w_aadhaar = doc.get("waiterAadhaar").toString();
-                        //String w_pan = doc.get("waiterPan").toString();
-                        //String w_id = doc.get("waiterId").toString();
+        String[] st1=date1.split("/");
+        String[] st2=date2.split("/");
+        final String nst1 = st1[2] + "/" + st1[1] + "/" + st1[0];
+        final String nst2 = st2[2] + "/" + st2[1] + "/" + st2[0];
+        Log.d("nst1",nst1);
+        Log.d("nst2",nst2);
+        int flag=0;
+        for(int i=0;i<st1.length;i++){
+            if(Integer.parseInt(st1[i])<=Integer.parseInt(st2[i])){
+                flag++;
+            }
+        }
+        if(!(date1.equals("")) && !(date2.equals(""))) {
 
-                        String w_id = doc.getId();
+            CollectionReference rootref = FirebaseFirestore.getInstance().collection("customers");
+            rootref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot doc : task.getResult()) {
+                            String date = doc.get("date").toString();
+                            String cust = doc.get("name").toString();
+                            String waitId = doc.get("waiterId").toString();
+                            String id = doc.getId();
+                            if (waitId.equals(firebaseAuth.getInstance().getUid())) {
+                                Log.d("date",date);
+                                String[] st11=date.split("/");
+                                final String nst11;
+                                if(st11[0].charAt(0)=='0'){
+                                    nst11 = st11[2] + "/" + st11[1] + "/" + st11[0].charAt(1);
+                                }
+                                else{
+                                    nst11 = st11[2] + "/" + st11[1] + "/" + st11[0];
+                                }
+                                Log.d("nst11:",nst11);
+                                Log.d("nst1:",nst1);
+                                Log.d("nst2:",nst2);
+                                if(nst11.compareTo(nst1) >= 0 && nst11.compareTo(nst2) <= 0){
+                                    ModelSessionsList model = new ModelSessionsList(date, cust, waitId);
+                                    //WaitersList.getInstance().friends.add(waiter);
+                                    sessionsLists.add(model);
+                                    adaptersessionsList = new AdapterSessionsList(SessionsListActivity.this, sessionsLists);
+                                    myrecyclerview.setAdapter(adaptersessionsList);
+                                }
 
-                        ModelSessionsList model = new ModelSessionsList(date, cust, waitId);
-                        //WaitersList.getInstance().friends.add(waiter);
-                        sessionsLists.add(model);
-                        adaptersessionsList = new AdapterSessionsList(SessionsListActivity.this, sessionsLists);
-                        myrecyclerview.setAdapter(adaptersessionsList);
+                            }
+                        }
+                    } else {
+                        Log.d("FAILED", "Error getting documents: ", task.getException());
                     }
                 }
-                else {
-                    Log.d("FAILED", "Error getting documents: ", task.getException());
-                }
-            }
-        });
+            });
+        }
     }
 
     @Override

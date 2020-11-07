@@ -60,6 +60,7 @@ public class cartList extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        myrecyclerview = findViewById(R.id.usersRv111);
         //Log.d("user:",firebaseAuth.getCurrentUser().getUid());
         itemsLists = new ArrayList<ModelCategorywiseItem>();
         adapteritemsList = new AdapterOrderedItems(cartList.this, itemsLists,time);

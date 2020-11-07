@@ -60,10 +60,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="120dp"
                 android:maxLines="1"
                 android:textSize="20dp"
-                android:text="Actual Price" />
+                android:text="0" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

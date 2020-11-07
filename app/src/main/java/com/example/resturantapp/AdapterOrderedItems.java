@@ -64,7 +64,8 @@ public class AdapterOrderedItems extends RecyclerView.Adapter<com.example.restur
                             int x=Integer.parseInt(document.get("qantity").toString());
                             int y=Integer.parseInt(w_cost);
                             int pro=(x*y);
-                            holder.price.setText(pro);
+                            Log.d("pro:", String.valueOf(pro));
+                            holder.price.setText(String.valueOf(pro));
                         }
                     }
 

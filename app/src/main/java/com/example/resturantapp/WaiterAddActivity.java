@@ -205,13 +205,6 @@ public class WaiterAddActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-                        /*} else {
-                            Log.d("FAILED", "Error getting documents: ", task.getException());
-                            Toast.makeText(WaiterAddActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });*/
-        //FirebaseAuth.getInstance().signOut();
     }
 
         /*final int[] flag = {0};
@@ -279,13 +272,6 @@ public class WaiterAddActivity extends AppCompatActivity {
         }
 
     }
-
-    /*private void checkUser() {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null) {
-            actionBar.setSubtitle(user.getEmail());
-        }
-    }*/
 
     @Override
     public boolean onSupportNavigateUp() {

@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back2"
     tools:context=".cartList"
+    android:layout_gravity="bottom"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -31,17 +37,10 @@
     </androidx.cardview.widget.CardView>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_marginBottom="10dp">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        android:layout_marginBottom="10dp"
+        android:id="@+id/cc1">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/usersRv111"
@@ -51,61 +50,55 @@
                     tools:listitem="@layout/activity_cart_display">
 
                 </androidx.recyclerview.widget.RecyclerView>
-            </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    tools:context=".views.CartFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="16dp" />
-
-                    <TextView
-                        android:id="@+id/orderTotalTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_margin="8dp"
-                        android:text="Total: "
-                        android:textColor="#000000"
-                        android:textSize="25dp"
-                        />
-
-                    <Button
-                        android:id="@+id/addItems"
-                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|end"
-                        android:textSize="20dp"
-                        android:layout_margin="8dp"
-                        android:text="Add Item"
-                        android:textColor="#ffffff"
-                        />
-
-                    <Button
-                        android:id="@+id/endSession"
-                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|end"
-                        android:textSize="20dp"
-                        android:layout_margin="8dp"
-                        android:text="End Session"
-                        android:textColor="#ffffff"
-                        />
-
-
-            </LinearLayout>
-
-
-        </ScrollView>
-
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/cc1"
+            android:layout_height="wrap_content">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <TextView
+                android:id="@+id/orderTotalTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="8dp"
+                android:text="Total: "
+                android:textColor="#000000"
+                android:textSize="25dp"
+                />
+
+            <Button
+                android:id="@+id/addItems"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:textSize="20dp"
+                android:layout_margin="8dp"
+                android:text="Add Item"
+                android:textColor="#ffffff"
+                />
+
+            <Button
+                android:id="@+id/endSession"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:textSize="20dp"
+                android:layout_margin="8dp"
+                android:text="End Session"
+                android:textColor="#ffffff"
+                />
 
 
-</LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

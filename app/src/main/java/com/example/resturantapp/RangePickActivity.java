@@ -140,7 +140,7 @@ public class RangePickActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else{
-                    Toast.makeText(RangePickActivity.this,"fill valid dates", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RangePickActivity.this,"Pick valid interval", Toast.LENGTH_SHORT).show();
                 }
 
 
