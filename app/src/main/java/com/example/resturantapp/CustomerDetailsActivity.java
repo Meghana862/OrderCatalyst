@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import java.text.SimpleDateFormat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -91,7 +93,8 @@ public class CustomerDetailsActivity extends AppCompatActivity {
                             hashMap1.put("aadhaarNo", aadhaar);
                             hashMap1.put("waiterId",""+firebaseAuth.getInstance().getUid());
                             Calendar calender=Calendar.getInstance();
-                            String currentDate= DateFormat.getDateInstance().format(calender.getTime());
+        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd/MM/yyyy");
+        String currentDate= simpleDateFormat.format(calender.getTime());
                             hashMap1.put("date",currentDate);
                             Log.d("uid ", uid);
                             final String g_timestamp = "" + System.currentTimeMillis();
