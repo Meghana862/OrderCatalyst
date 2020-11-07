@@ -23,6 +23,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class CustomerDetailsActivity extends AppCompatActivity {
     private EditText cphone;
     private EditText cAadhaar;
     private Button btn;
+    String t_name;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore db;
@@ -46,6 +48,12 @@ public class CustomerDetailsActivity extends AppCompatActivity {
         cAadhaar=findViewById(R.id.aadharno);
         btn=findViewById(R.id.button1);
         db = FirebaseFirestore.getInstance();
+
+        Intent iin=getIntent();
+        Bundle b=iin.getExtras();
+        if(b!=null){
+            t_name=(String)b.get("t_name");
+        }
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +80,7 @@ public class CustomerDetailsActivity extends AppCompatActivity {
     public  void storeDetails(final String name, final String phone, final String aadhaar){
 
                             //addAdmin(email1,password1);
-                            /*FirebaseUser f_user = FirebaseAuth.getInstance().getCurrentUser();
+                            FirebaseUser f_user = FirebaseAuth.getInstance().getCurrentUser();
                             final String uid = f_user.getUid();
                             final HashMap<String, String> hashMap1 = new HashMap<>();
                             hashMap1.put("name", name);
@@ -87,11 +95,46 @@ public class CustomerDetailsActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Toast.makeText(CustomerDetailsActivity.this, "Customer Added", Toast.LENGTH_SHORT).show();
-                                            Intent intent=new Intent(CustomerDetailsActivity.this,OTPActivity.class);
+                                            db.collection("tables").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        for (final QueryDocumentSnapshot document : task.getResult()) {
+                                                            if (t_name.equals(document.get("name"))) {
+                                                                String id=document.getId();
+                                                                final HashMap<String,String> hashMap=new HashMap<>();
+                                                                hashMap.put("status","occupied");
+                                                                hashMap.put("customerId",g_timestamp);
+                                                                hashMap.put("waiterId",firebaseAuth.getInstance().getUid());
+                                                                final CollectionReference rootRef1 = FirebaseFirestore.getInstance().collection("tables");
+                                                                rootRef1.document(id).set(hashMap, SetOptions.merge())
+                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                            @Override
+                                                                            public void onSuccess(Void aVoid) {
+                                                                                Toast.makeText(CustomerDetailsActivity.this,"Updated successfully",Toast.LENGTH_SHORT).show();
+
+                                                                            }
+                                                                        })
+                                                                        .addOnFailureListener(new OnFailureListener() {
+                                                                            @Override
+                                                                            public void onFailure(@NonNull Exception e) {
+                                                                                Toast.makeText(CustomerDetailsActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                                                                            }
+                                                                        });
+                                                            }
+                                                        }
+
+                                                    } else {
+                                                        Log.d("FAILED", "Error getting documents: ", task.getException());
+                                                    }
+                                                }
+                                            });
+                                            Intent intent=new Intent(CustomerDetailsActivity.this,Menu.class);
                                             intent.putExtra("name",name );
                                             intent.putExtra("phoneNo",phone);
                                             intent.putExtra("aadhaarNo",aadhaar );
                                             intent.putExtra("waiterId",firebaseAuth.getInstance().getUid());
+                                            intent.putExtra("time",g_timestamp);
                                             startActivity(intent);
                                             finish();
                                         }
@@ -101,14 +144,14 @@ public class CustomerDetailsActivity extends AppCompatActivity {
                                         public void onFailure(@NonNull Exception e) {
                                             Toast.makeText(CustomerDetailsActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
-                                    });*/
-        Toast.makeText(CustomerDetailsActivity.this, "Customer Added", Toast.LENGTH_SHORT).show();
+                                    });
+        /*Toast.makeText(CustomerDetailsActivity.this, "Customer Added", Toast.LENGTH_SHORT).show();
         Intent intent=new Intent(CustomerDetailsActivity.this,Menu.class);
         intent.putExtra("name",name );
         intent.putExtra("phoneNo",phone);
         intent.putExtra("aadhaarNo",aadhaar );
         intent.putExtra("waiterId",firebaseAuth.getInstance().getUid());
         startActivity(intent);
-        finish();
+        finish();*/
     }
 }

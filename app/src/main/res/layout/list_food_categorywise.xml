@@ -60,6 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:finalNumber="15"
+                app:initialNumber="0"
                 app:backGroundColor="#ba5e16"
                 ></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 

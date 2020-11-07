@@ -33,7 +33,7 @@ public class AdapterTablesList extends RecyclerView.Adapter<AdapterTablesList.Ho
     public void onBindViewHolder(@NonNull HolderTablesList holder, int position) {
         ModelTablesList model = TablesList.get(position);
         final String t_name= model.getName();
-        String t_status= model.getStatus();
+        final String t_status= model.getStatus();
 
         holder.t_name.setText(t_name);
         holder.t_status.setText(t_status);
@@ -43,6 +43,7 @@ public class AdapterTablesList extends RecyclerView.Adapter<AdapterTablesList.Ho
             public void onClick(View view) {
                 Intent intent=new Intent(context,CustomerDetailsActivity.class);
                 intent.putExtra("t_name",t_name);
+                intent.putExtra("t_status",t_status);
                 context.startActivity(intent);
             }
         });

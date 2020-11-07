@@ -34,6 +34,7 @@ public class CateorywiseItemsActivity extends AppCompatActivity {
     private AdapterCategorywiseItems adapteritemsList;
     private FloatingActionButton show_desc_Btn;
     private String category;
+    private String time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class CateorywiseItemsActivity extends AppCompatActivity {
         Bundle b=iin.getExtras();
         if(b!=null){
             category=(String)b.get("category");
+            time=(String)b.get("time");
         }
 
         actionBar = getSupportActionBar();
@@ -55,7 +57,7 @@ public class CateorywiseItemsActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         //Log.d("user:",firebaseAuth.getCurrentUser().getUid());
         itemsLists = new ArrayList<ModelCategorywiseItem>();
-        adapteritemsList = new AdapterCategorywiseItems(CateorywiseItemsActivity.this, itemsLists);
+        adapteritemsList = new AdapterCategorywiseItems(CateorywiseItemsActivity.this, itemsLists,time);
         LinearLayoutManager llm = new LinearLayoutManager(CateorywiseItemsActivity.this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myrecyclerview.setLayoutManager(llm);
@@ -71,7 +73,9 @@ public class CateorywiseItemsActivity extends AppCompatActivity {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent=new Intent(CateorywiseItemsActivity.this, com.example.resturantapp.Menu.class);
+                intent.putExtra("time",time );
                 startActivity(intent);
 
             }
@@ -96,7 +100,7 @@ public class CateorywiseItemsActivity extends AppCompatActivity {
                             ModelCategorywiseItem model = new ModelCategorywiseItem(w_name, w_category, w_cost, w_id);
                             //WaitersList.getInstance().friends.add(waiter);
                             itemsLists.add(model);
-                            adapteritemsList = new AdapterCategorywiseItems(CateorywiseItemsActivity.this, itemsLists);
+                            adapteritemsList = new AdapterCategorywiseItems(CateorywiseItemsActivity.this, itemsLists,time);
                             myrecyclerview.setAdapter(adapteritemsList);
                         }
                     }
