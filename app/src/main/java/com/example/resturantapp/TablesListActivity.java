@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +36,7 @@ public class TablesListActivity extends AppCompatActivity {
     private AdapterTablesList adaptertablesList;
     private AdapterEmptyTablesList adapteremptytablesList;
     private FloatingActionButton show_desc_Btn;
+    private Button log;
 
 
     @Override
@@ -43,7 +45,8 @@ public class TablesListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tables_list);
 
         myrecyclerview = findViewById(R.id.usersRv111);
-        myrecyclerview1 = findViewById(R.id.usersRv);
+        //myrecyclerview1 = findViewById(R.id.usersRv);
+        log=findViewById(R.id.log);
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -60,20 +63,28 @@ public class TablesListActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(TablesListActivity.this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
-        LinearLayoutManager llm1 = new LinearLayoutManager(TablesListActivity.this);
-        llm1.setOrientation(LinearLayoutManager.VERTICAL);
+        //LinearLayoutManager llm1 = new LinearLayoutManager(TablesListActivity.this);
+        //llm1.setOrientation(LinearLayoutManager.VERTICAL);
 
         myrecyclerview.setLayoutManager(llm);
         myrecyclerview.setAdapter(adaptertablesList);
 
-        myrecyclerview1.setLayoutManager(llm1);
-        myrecyclerview1.setAdapter(adaptertablesList);
+        //myrecyclerview1.setLayoutManager(llm1);
+        //myrecyclerview1.setAdapter(adaptertablesList);
 
         /*LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myrecyclerview.setLayoutManager(llm);
         myrecyclerview.setAdapter(adapterwaitersList);*/
         loadInfo();
+        log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(TablesListActivity.this,RangePickActivity.class);
+                intent.putExtra("w_id",firebaseAuth.getInstance().getUid());
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -92,8 +103,11 @@ public class TablesListActivity extends AppCompatActivity {
                         String t_name = doc.get("name").toString();
 
                         ModelTablesList model = new ModelTablesList(t_name, t_custId, t_waitId, t_status);
+                        tablesLists.add(model);
+                        adaptertablesList = new AdapterTablesList(TablesListActivity.this, tablesLists);
+                        myrecyclerview.setAdapter(adaptertablesList);
                         //WaitersList.getInstance().friends.add(waiter);
-                        if(t_status.equals("occupied")){
+                        /*if(t_status.equals("occupied")){
                             tablesLists.add(model);
                             adaptertablesList = new AdapterTablesList(TablesListActivity.this, tablesLists);
                             myrecyclerview.setAdapter(adaptertablesList);
@@ -103,7 +117,7 @@ public class TablesListActivity extends AppCompatActivity {
                             adapteremptytablesList = new AdapterEmptyTablesList(TablesListActivity.this, tablesLists);
                             myrecyclerview1.setAdapter(adapteremptytablesList);
 
-                        }
+                        }*/
                     }
                 }
                 else {

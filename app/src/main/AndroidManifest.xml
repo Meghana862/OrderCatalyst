@@ -9,15 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CateorywiseItemsActivity"></activity>
+        <activity android:name=".SessionsActivity"></activity>
+        <activity android:name=".RangePickActivity" />
+        <activity android:name=".CateorywiseItemsActivity" />
         <activity android:name=".cartList" />
-        <activity android:name=".foodList"></activity>
-        <activity android:name=".Menu">
-        </activity>
+        <activity android:name=".foodList" />
+        <activity android:name=".Menu" />
         <activity android:name=".OTPActivity" />
-        <activity android:name=".CustomerDetailsActivity" >
-
-        </activity>
+        <activity android:name=".CustomerDetailsActivity" />
         <activity android:name=".TablesListActivity" />
         <activity android:name=".WaiterEditActivity" />
         <activity android:name=".WaiterAddActivity" />
@@ -30,7 +29,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

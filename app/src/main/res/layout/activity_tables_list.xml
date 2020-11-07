@@ -10,10 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Activity log"
+            android:id="@+id/log"
+            android:layout_gravity="center"/>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/log"
         android:layout_marginBottom="10dp">
 
             <LinearLayout
@@ -32,7 +39,7 @@
 
             </LinearLayout>
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lr1">
@@ -46,7 +53,7 @@
 
             </androidx.recyclerview.widget.RecyclerView>
 
-        </LinearLayout>
+        </LinearLayout>-->
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
