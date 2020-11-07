@@ -45,6 +45,7 @@ public class AdapterTablesList extends RecyclerView.Adapter<AdapterTablesList.Ho
                 if(t_status.equals("occupied")){
                     Intent intent=new Intent(context,cartList.class);
                     intent.putExtra("time",time);
+                    intent.putExtra("t_name",t_name);
                     context.startActivity(intent);
                 }
                 else{
