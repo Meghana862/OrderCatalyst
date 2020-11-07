@@ -121,6 +121,9 @@ public class OTPActivity extends AppCompatActivity {
                         }
                     }
                 });*/
+        // String otp_code = credential.getSmsCode()
+       Toast.makeText(OTPActivity.this, credential.getSmsCode(), Toast.LENGTH_LONG).show();
+
         send_data(name, phoneNo, aadhaarNo,waiterId);
     }
 

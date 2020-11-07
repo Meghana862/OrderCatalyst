@@ -25,6 +25,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -87,6 +89,9 @@ public class CustomerDetailsActivity extends AppCompatActivity {
                             hashMap1.put("phoneNo", phone);
                             hashMap1.put("aadhaarNo", aadhaar);
                             hashMap1.put("waiterId",""+firebaseAuth.getInstance().getUid());
+                            Calendar calender=Calendar.getInstance();
+                            String currentDate= DateFormat.getDateInstance().format(calender.getTime());
+                            hashMap1.put("date",currentDate);
                             Log.d("uid ", uid);
                             final String g_timestamp = "" + System.currentTimeMillis();
 
@@ -129,7 +134,7 @@ public class CustomerDetailsActivity extends AppCompatActivity {
                                                     }
                                                 }
                                             });
-                                            Intent intent=new Intent(CustomerDetailsActivity.this,Menu.class);
+                                            Intent intent=new Intent(CustomerDetailsActivity.this,OTPActivity.class);
                                             intent.putExtra("name",name );
                                             intent.putExtra("phoneNo",phone);
                                             intent.putExtra("aadhaarNo",aadhaar );
