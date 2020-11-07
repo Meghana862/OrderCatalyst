@@ -29,6 +29,7 @@ public class cartList extends AppCompatActivity {
     private Button end;
     private String t_name;
     private TextView total;
+    static int num1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,54 @@ public class cartList extends AppCompatActivity {
         addItems=findViewById(R.id.addItems);
         end=findViewById(R.id.endSession);
         total=findViewById(R.id.orderTotalTextView);
-        final int num = find(time);
-        total.setText("Total:"+num);
+        //final int num = find(time);
+        final CollectionReference rootRef = FirebaseFirestore.getInstance().collection("customers");
+        rootRef.document(time).collection("order").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (final QueryDocumentSnapshot document : task.getResult()) {
+                        final String id=document.getId();
+                        final String quantity=document.get("qantity").toString();
+                        Log.d("quantity", quantity);
+                        final String[] individual_price = new String[1];
+
+                        final CollectionReference rootRef1 = FirebaseFirestore.getInstance().collection("food");
+                        rootRef1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (final QueryDocumentSnapshot document1 : task.getResult()) {
+                                        if (id.equals(document1.getId())) {
+                                            individual_price[0] = document1.get("cost").toString();
+                                            Log.d("cost", individual_price[0]);
+                                            int x=Integer.parseInt(quantity);
+                                            int y=Integer.parseInt(individual_price[0]);
+                                            num1 = num1 +(x*y);
+                                            total.setText("Total:"+num1);
+                                            Log.d("total", String.valueOf(num1));
+                                        }
+                                    }
+
+                                } else {
+                                    Log.d("FAILED", "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+                        //int x=Integer.parseInt(quantity);
+                        //int y=Integer.parseInt(individual_price[0]);
+                        //num[0] = num[0] +(x*y);
+                        //Log.d("total", String.valueOf(num[0]));
+                    }
+
+                } else {
+                    Log.d("FAILED", "Error getting documents: ", task.getException());
+                }
+            }
+            //total.setText("Total:"+ num[0]);
+        });
+        Log.d("total1", String.valueOf(num1));
+        //total.setText("Total:"+num1);
 
         addItems.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +152,7 @@ public class cartList extends AppCompatActivity {
         });
 
     }
-    static int find(String time){
+    /*static int find(String time){
         final int[] num = {0};
         final CollectionReference rootRef = FirebaseFirestore.getInstance().collection("customers");
         rootRef.document(time).collection("order").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -152,5 +199,5 @@ public class cartList extends AppCompatActivity {
             //total.setText("Total:"+ num[0]);
         });
         return num[0];
-    }
+    }*/
 }
