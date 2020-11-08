@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,10 +17,12 @@ public class AdapterTablesList extends RecyclerView.Adapter<AdapterTablesList.Ho
 
     private Context context;
     private ArrayList<ModelTablesList> TablesList;
+    private String waiterId;
 
-    public AdapterTablesList(Context context, ArrayList<ModelTablesList> tablesList) {
+    public AdapterTablesList(Context context, ArrayList<ModelTablesList> tablesList,String waiterId) {
         this.context = context;
         this.TablesList = tablesList;
+        this.waiterId=waiterId;
     }
 
     @NonNull
@@ -35,6 +38,7 @@ public class AdapterTablesList extends RecyclerView.Adapter<AdapterTablesList.Ho
         final String t_name= model.getName();
         final String t_status= model.getStatus();
         final String time=model.getCustId();
+        final String w_id=model.getWaitId();
 
         holder.t_name.setText(t_name);
         holder.t_status.setText(t_status);
@@ -42,11 +46,14 @@ public class AdapterTablesList extends RecyclerView.Adapter<AdapterTablesList.Ho
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(t_status.equals("occupied")){
+                if(t_status.equals("occupied")&&w_id.equals(waiterId)){
                     Intent intent=new Intent(context,cartList.class);
                     intent.putExtra("time",time);
                     intent.putExtra("t_name",t_name);
                     context.startActivity(intent);
+                }
+                else if(t_status.equals("occupied")&&!w_id.equals(waiterId)){
+                    Toast.makeText(context,"Access denied",Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Intent intent=new Intent(context,CustomerDetailsActivity.class);

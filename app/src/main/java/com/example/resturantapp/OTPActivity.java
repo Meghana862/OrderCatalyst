@@ -212,6 +212,7 @@ public class OTPActivity extends AppCompatActivity {
                             });
                             Intent intent=new Intent(OTPActivity.this,Menu.class);
                             intent.putExtra("time",time);
+                            intent.putExtra("t_name",t_name);
                             startActivity(intent);
                             finish();
                         }

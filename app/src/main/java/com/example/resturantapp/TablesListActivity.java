@@ -57,7 +57,7 @@ public class TablesListActivity extends AppCompatActivity {
         //Log.d("user:",firebaseAuth.getCurrentUser().getUid());
         tablesLists = new ArrayList<ModelTablesList>();
 
-        adaptertablesList = new AdapterTablesList(TablesListActivity.this, tablesLists);
+        adaptertablesList = new AdapterTablesList(TablesListActivity.this, tablesLists,firebaseAuth.getInstance().getUid());
         adapteremptytablesList = new AdapterEmptyTablesList(TablesListActivity.this, tablesLists);
 
         LinearLayoutManager llm = new LinearLayoutManager(TablesListActivity.this);
@@ -104,7 +104,7 @@ public class TablesListActivity extends AppCompatActivity {
 
                         ModelTablesList model = new ModelTablesList(t_name, t_custId, t_waitId, t_status);
                         tablesLists.add(model);
-                        adaptertablesList = new AdapterTablesList(TablesListActivity.this, tablesLists);
+                        adaptertablesList = new AdapterTablesList(TablesListActivity.this, tablesLists,firebaseAuth.getInstance().getUid());
                         myrecyclerview.setAdapter(adaptertablesList);
                         //WaitersList.getInstance().friends.add(waiter);
                         /*if(t_status.equals("occupied")){

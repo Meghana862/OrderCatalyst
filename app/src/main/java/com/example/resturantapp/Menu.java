@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class Menu extends AppCompatActivity {
     private Button starter;
     private Button biryani;
@@ -16,6 +18,8 @@ public class Menu extends AppCompatActivity {
     private Button drinks;
     private String time;
     private ActionBar actionBar;
+    private String t_name;
+    FloatingActionButton actionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,19 @@ public class Menu extends AppCompatActivity {
         Bundle b=iin.getExtras();
         if(b!=null){
             time=(String)b.get("time");
+            t_name=(String)b.get("t_name");
         }
+        actionButton = findViewById(R.id.fab_btn111);
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(Menu.this,cartList.class);
+                intent.putExtra("t_name",t_name);
+                intent.putExtra("time",time );
+                startActivity(intent);
+
+            }
+        });
 
         starter.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
