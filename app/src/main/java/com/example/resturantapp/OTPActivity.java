@@ -25,8 +25,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -37,12 +43,17 @@ public class OTPActivity extends AppCompatActivity {
     String phoneNo;
     String aadhaarNo;
     String waiterId;
+    private String time;
     MaterialButton signin_btn;
     private String verificationId;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private ProgressBar progressBar;
     private TextInputEditText otp_edit_text;
+    private String code;
+    private String t_name;
+    private String currentDate;
+
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
@@ -52,7 +63,7 @@ public class OTPActivity extends AppCompatActivity {
 
         @Override
         public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-            String code = phoneAuthCredential.getSmsCode();
+            code = phoneAuthCredential.getSmsCode();
             if (code != null) {
                 otp_edit_text.setText(code);
                 verifyCode(code);
@@ -72,23 +83,30 @@ public class OTPActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
+        Intent iin=getIntent();
+        Bundle b=iin.getExtras();
+        if(b!=null){
+            time=(String)b.get("time");
+            name = b.getString("name");
+            aadhaarNo = b.getString("aadhaarNo");
+            phoneNo = b.getString("phoneNo");
+            waiterId = b.getString("waiterId");
+            t_name= b.getString("t_name");
+            currentDate= b.getString("currentDate");
+        }
+
         progressBar = findViewById(R.id.progressBar);
         otp_edit_text = findViewById(R.id.otp_edit);
         signin_btn = findViewById(R.id.sign_in_btn);
 
-        //Intent i = getIntent();
-        Bundle b = getIntent().getExtras();
-        name = b.getString("name");
-        aadhaarNo = b.getString("aadhaarNo");
-        phoneNo = b.getString("phoneNo");
-        waiterId = b.getString("waiterId");
 
+        //Intent i = getIntent();
         sendVerificationCode(phoneNo);
 
         signin_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String code = otp_edit_text.getText().toString().trim();
+                code = otp_edit_text.getText().toString().trim();
 
                 if (code.isEmpty() || code.length() < 6) {
                     otp_edit_text.setError("Enter Code...");
@@ -121,10 +139,22 @@ public class OTPActivity extends AppCompatActivity {
                         }
                     }
                 });*/
-        // String otp_code = credential.getSmsCode()
+        String otp_code = credential.getSmsCode();
+        if(otp_code.equals(code)){
+            send_data(name, phoneNo, aadhaarNo,waiterId,currentDate);
+        }
+        else{
+            //Toast.makeText(OTPActivity.this, credential.getSmsCode(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(OTPActivity.this, code, Toast.LENGTH_LONG).show();
+            //Log.d("sent:",credential.getSmsCode());
+            //Log.d("received:",code);
+            //Log.d("typed:",code);
+            Toast.makeText(OTPActivity.this, "Recheck OTP", Toast.LENGTH_SHORT).show();
+        }
        Toast.makeText(OTPActivity.this, credential.getSmsCode(), Toast.LENGTH_LONG).show();
+        Toast.makeText(OTPActivity.this, code, Toast.LENGTH_LONG).show();
 
-        send_data(name, phoneNo, aadhaarNo,waiterId);
+
     }
 
     private void sendVerificationCode(String phoneNumber) {
@@ -132,28 +162,56 @@ public class OTPActivity extends AppCompatActivity {
         PhoneAuthProvider.getInstance().verifyPhoneNumber("+91"+phoneNumber, 60, TimeUnit.SECONDS, TaskExecutors.MAIN_THREAD, mCallBack);
     }
 
-    public void send_data(String name, String phoneNo, String aadhaarNo,String waiterId) {
+    public void send_data(String name, String phoneNo, String aadhaarNo, final String waiterId, String currentDate) {
 
-        FirebaseUser f_user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (f_user != null) {
-            final String uid = f_user.getUid();
             Map<String, Object> note = new HashMap<>();
             note.put("name", name);
             note.put("phoneNo", phoneNo);
             note.put("waiterId", waiterId);
             note.put("aadhaarId", aadhaarNo);
+            note.put("date",currentDate);
 
-            Log.d("uid ", uid);
-
-            final String g_timestamp = "" + System.currentTimeMillis();
-
-            db.collection("customers").document(g_timestamp).set(note)
+            db.collection("customers").document(time).set(note)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(OTPActivity.this, "Customer Added", Toast.LENGTH_SHORT).show();
+                            db.collection("tables").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (final QueryDocumentSnapshot document : task.getResult()) {
+                                            if (t_name.equals(document.get("name"))) {
+                                                String id=document.getId();
+                                                final HashMap<String,String> hashMap=new HashMap<>();
+                                                hashMap.put("status","occupied");
+                                                hashMap.put("customerId",time);
+                                                hashMap.put("waiterId",waiterId);
+                                                final CollectionReference rootRef1 = FirebaseFirestore.getInstance().collection("tables");
+                                                rootRef1.document(id).set(hashMap, SetOptions.merge())
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Toast.makeText(OTPActivity.this,"Updated successfully",Toast.LENGTH_SHORT).show();
+
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                Toast.makeText(OTPActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+                                            }
+                                        }
+
+                                    } else {
+                                        Log.d("FAILED", "Error getting documents: ", task.getException());
+                                    }
+                                }
+                            });
                             Intent intent=new Intent(OTPActivity.this,Menu.class);
+                            intent.putExtra("time",time);
                             startActivity(intent);
                             finish();
                         }
@@ -164,9 +222,6 @@ public class OTPActivity extends AppCompatActivity {
                             Toast.makeText(OTPActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-        } else {
-            Toast.makeText(OTPActivity.this, "user not logged in", Toast.LENGTH_LONG).show();
-        }
 
     }
 
