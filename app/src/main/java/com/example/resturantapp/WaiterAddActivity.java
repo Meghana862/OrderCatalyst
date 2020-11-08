@@ -37,6 +37,7 @@ public class WaiterAddActivity extends AppCompatActivity {
     private TextInputEditText mobile;
     private TextInputEditText aadhaar;
     private TextInputEditText pan;
+    private TextInputEditText conf;
     private TextInputEditText password;
     private Button submitBtn;
     private ProgressDialog progressDialog;
@@ -56,7 +57,7 @@ public class WaiterAddActivity extends AppCompatActivity {
         name = findViewById(R.id.name_edit);
         mobile = findViewById(R.id.mobile_edit);
         aadhaar = findViewById(R.id.aadhaar_edit);
-        pan = findViewById(R.id.pass_edit);
+        conf = findViewById(R.id.conf_pass_edit);
         password=findViewById(R.id.pass_edit);
         pan=findViewById(R.id.pan_edit);
         submitBtn = findViewById(R.id.sub_btn);
@@ -81,6 +82,7 @@ public class WaiterAddActivity extends AppCompatActivity {
         progressDialog.setMessage("Adding Waiter");
 
         final String waiterEmail = email.getText().toString().trim();
+        final String waiterConf = conf.getText().toString().trim();
         String waiterName = name.getText().toString().trim();
         String waiterPhone = mobile.getText().toString().trim();
         String waiterAadhaar = aadhaar.getText().toString().trim();
@@ -95,41 +97,46 @@ public class WaiterAddActivity extends AppCompatActivity {
             Toast.makeText(WaiterAddActivity.this, "Please Enter Valid Mobile Number", Toast.LENGTH_SHORT).show();
             return;
         }
-        progressDialog.show();
-        //final String w_timestamp = "" + System.currentTimeMillis();
-        //createGroup("" + g_timestamp, "" + grpTitleSt, "" + grpDescriptionSt);
+        else {
 
-        final String w_timestamp = "" + System.currentTimeMillis();
-        final String waiterNamest = "" + waiterName;
-        final String waiterEmailst = "" + waiterEmail;
-        final String waiterPhonest = "" + waiterPhone;
-        final String waiterAadhaarst = "" + waiterAadhaar;
-        final String waiterPassst = "" + waiterPass;
-        final String waiterPanst = "" + waiterPan;
+            progressDialog.show();
+            //final String w_timestamp = "" + System.currentTimeMillis();
+            //createGroup("" + g_timestamp, "" + grpTitleSt, "" + grpDescriptionSt);
+
+            final String w_timestamp = "" + System.currentTimeMillis();
+            final String waiterNamest = "" + waiterName;
+            final String waiterEmailst = "" + waiterEmail;
+            final String waiterPhonest = "" + waiterPhone;
+            final String waiterAadhaarst = "" + waiterAadhaar;
+            final String waiterPassst = "" + waiterPass;
+            final String waiterPanst = "" + waiterPan;
 
 
-        final CollectionReference rootRef1 = FirebaseFirestore.getInstance().collection("admins");
-        rootRef1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (final QueryDocumentSnapshot document : task.getResult()) {
-                        if (firebaseAuth.getCurrentUser().equals(document.getId())) {
-                            String adEmail=document.get("admin_email").toString();
-                            String adPass=document.get("admin_password").toString();
-                            checking(w_timestamp,waiterNamest,waiterEmailst,waiterPhonest,waiterAadhaarst,waiterPassst,firebaseAuth.getCurrentUser().getUid(),waiterPan,adEmail,adPass);
+            /*final CollectionReference rootRef1 = FirebaseFirestore.getInstance().collection("admins");
+            rootRef1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (final QueryDocumentSnapshot document : task.getResult()) {
+                            if (firebaseAuth.getCurrentUser().equals(document.getId())) {
+                                String adEmail = document.get("admin_email").toString();
+                                String adPass = document.get("admin_password").toString();
+                                checking(w_timestamp, waiterNamest, waiterEmailst, waiterPhonest, waiterAadhaarst, waiterPassst, firebaseAuth.getCurrentUser().getUid(), waiterPan, adEmail, adPass);
+                            }
                         }
-                    }
 
-                } else {
-                    Log.d("FAILED", "Error getting documents: ", task.getException());
+                    } else {
+                        Log.d("FAILED", "Error getting documents: ", task.getException());
+                    }
                 }
-            }
-        });
+            });*/
+            checking(w_timestamp, waiterNamest, waiterEmailst, waiterPhonest, waiterAadhaarst, waiterPassst, firebaseAuth.getInstance().getUid(), waiterPan);
+
+        }
 
     }
 
-    public void checking(final String id, final String name, final String email, final String phone, final String aadhaar, final String pass, final String added, final String pan, final String adEmail, final String adPass) {
+    public void checking(final String id, final String name, final String email, final String phone, final String aadhaar, final String pass, final String added, final String pan) {
 
         /*firebaseAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(WaiterAddActivity.this, new OnCompleteListener<AuthResult>() {
@@ -156,6 +163,7 @@ public class WaiterAddActivity extends AppCompatActivity {
                                         }
                                         if (flag[0] == 0) {
                                             final HashMap<String, String> hashMap1 = new HashMap<>();
+                                            Log.d("outside:", String.valueOf(flag[0]));
 
                                             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,pass)
                                                     .addOnCompleteListener(WaiterAddActivity.this, new OnCompleteListener<AuthResult>() {
@@ -163,6 +171,7 @@ public class WaiterAddActivity extends AppCompatActivity {
                                                         public void onComplete(@NonNull Task<AuthResult> task) {
                                                             if (task.isSuccessful())
                                                             //hashMap1.put("waiterId", id);
+                                                                Log.d("inside:",name);
                                                             hashMap1.put("waiterName", name);
                                                             hashMap1.put("waiterEmail", email);
                                                             hashMap1.put("waiterPhone", phone);

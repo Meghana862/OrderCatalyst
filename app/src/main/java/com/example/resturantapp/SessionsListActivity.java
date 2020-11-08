@@ -101,12 +101,18 @@ public class SessionsListActivity extends AppCompatActivity {
                             if (waitId.equals(firebaseAuth.getInstance().getUid())) {
                                 Log.d("date",date);
                                 String[] st11=date.split("/");
-                                final String nst11;
-                                if(st11[0].charAt(0)=='0'){
-                                    nst11 = st11[2] + "/" + st11[1] + "/" + st11[0].charAt(1);
+                                String nst11=st11[2]+"/";
+                                if(st11[1].charAt(0)=='0'){
+                                    nst11 = nst11+st11[1].charAt(1) + "/" ;
                                 }
                                 else{
-                                    nst11 = st11[2] + "/" + st11[1] + "/" + st11[0];
+                                    nst11 = nst11 + st11[1] + "/" ;
+                                }
+                                if(st11[0].charAt(0)=='0'){
+                                    nst11 = nst11+ st11[0].charAt(1);
+                                }
+                                else{
+                                    nst11 =nst11 + st11[0];
                                 }
                                 Log.d("nst11:",nst11);
                                 Log.d("nst1:",nst1);
