@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back2"
-    tools:context=".cartList"
-    android:layout_gravity="bottom"
-    android:orientation="vertical">
+    tools:context=".cartList">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10sp"
-        android:layout_marginTop="10sp"
-        android:layout_marginRight="10sp">
-
-        <com.google.android.material.textview.MaterialTextView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Review Items"
-            android:textAlignment="center"
-            android:textSize="50dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:layout_marginTop="10sp"
+            android:layout_marginRight="10sp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Review Items"
+                android:textAlignment="center"
+                android:textSize="50dp" />
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -34,29 +37,21 @@
                 android:textAlignment="center"
                 android:textSize="50dp" />
 
-    </androidx.cardview.widget.CardView>
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/cc1">
+        </androidx.cardview.widget.CardView>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/usersRv111"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/activity_cart_display">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
         <LinearLayout
             android:orientation="vertical"
+            tools:context=".views.CartFragment"
             android:layout_width="match_parent"
-            android:layout_below="@+id/cc1"
             android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cartRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="2"
+                />
 
             <Space
                 android:layout_width="match_parent"
@@ -96,9 +91,9 @@
                 android:text="End Session"
                 android:textColor="#ffffff"
                 />
-
+            />
 
         </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </LinearLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,11 +14,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="600sp"
-        android:onClick="dosomething3"
+        android:layout_marginTop="550sp"
         android:background="@android:color/white"
-        android:textColor="@android:color/black"
+        android:onClick="dosomething3"
         android:text="Get Started "
+        android:textColor="@android:color/black"
         android:textSize="25sp"
         tools:ignore="MissingConstraints" />
 
