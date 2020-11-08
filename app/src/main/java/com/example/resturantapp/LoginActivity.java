@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else if(password1.length()>=6){
                     //registerUser(email1,password1);
-                    final int[] var = {0};
+                    //final int[] var = {0};
                     if(role.equals("Admin")){
                         loginUser1(email1,password1);
                         /*CollectionReference rootref = FirebaseFirestore.getInstance().collection("admins");
