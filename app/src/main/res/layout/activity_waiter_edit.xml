@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="18dp"
+            android:textColor="#000"
             android:text="Waiter Details"
             android:textAlignment="center"
             android:textSize="24sp" />
@@ -40,6 +41,7 @@
                 android:focusableInTouchMode="true"
                 android:hint="Name"
                 app:boxBackgroundMode="outline"
+                android:textColor="#000"
                 app:endIconMode="clear_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -44,7 +44,7 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="10dp"
             android:src="@drawable/ic_baseline_person_add_24"
-            app:backgroundTint="#ba5e16" />
+            app:backgroundTint="#ffff" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </LinearLayout>
