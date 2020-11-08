@@ -94,12 +94,22 @@ public class CustomerDetailsActivity extends AppCompatActivity {
                             hashMap1.put("waiterId",""+firebaseAuth.getInstance().getUid());
                             Calendar calender=Calendar.getInstance();
         SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd/MM/yyyy");
-        String currentDate= simpleDateFormat.format(calender.getTime());
+        final String currentDate= simpleDateFormat.format(calender.getTime());
                             hashMap1.put("date",currentDate);
                             Log.d("uid ", uid);
                             final String g_timestamp = "" + System.currentTimeMillis();
+        Intent intent=new Intent(CustomerDetailsActivity.this,OTPActivity.class);
+        intent.putExtra("name",name );
+        intent.putExtra("phoneNo",phone);
+        intent.putExtra("aadhaarNo",aadhaar );
+        intent.putExtra("waiterId",firebaseAuth.getInstance().getUid());
+        intent.putExtra("time",g_timestamp);
+        intent.putExtra("t_name",t_name);
+        intent.putExtra("currentDate",currentDate);
+        startActivity(intent);
+        finish();
 
-                            db.collection("customers").document(g_timestamp).set(hashMap1)
+                            /*db.collection("customers").document(g_timestamp).set(hashMap1)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
@@ -138,12 +148,14 @@ public class CustomerDetailsActivity extends AppCompatActivity {
                                                     }
                                                 }
                                             });
-                                            Intent intent=new Intent(CustomerDetailsActivity.this,Menu.class);
+                                            Intent intent=new Intent(CustomerDetailsActivity.this,OTPActivity.class);
                                             intent.putExtra("name",name );
                                             intent.putExtra("phoneNo",phone);
                                             intent.putExtra("aadhaarNo",aadhaar );
                                             intent.putExtra("waiterId",firebaseAuth.getInstance().getUid());
                                             intent.putExtra("time",g_timestamp);
+                                            intent.putExtra("t_name",t_name);
+                                            intent.putExtra("currentDate",currentDate);
                                             startActivity(intent);
                                             finish();
                                         }
@@ -153,7 +165,7 @@ public class CustomerDetailsActivity extends AppCompatActivity {
                                         public void onFailure(@NonNull Exception e) {
                                             Toast.makeText(CustomerDetailsActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
-                                    });
+                                    });*/
         /*Toast.makeText(CustomerDetailsActivity.this, "Customer Added", Toast.LENGTH_SHORT).show();
         Intent intent=new Intent(CustomerDetailsActivity.this,Menu.class);
         intent.putExtra("name",name );
