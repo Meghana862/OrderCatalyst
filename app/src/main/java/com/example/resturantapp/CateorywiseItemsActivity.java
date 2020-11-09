@@ -144,7 +144,9 @@ public class CateorywiseItemsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         super.onBackPressed();
-        Intent intent = new Intent(CateorywiseItemsActivity.this, com.example.resturantapp.Menu.class);
+        Intent intent = new Intent(CateorywiseItemsActivity.this, Menu.class);
+        intent.putExtra("t_name",t_name);
+        intent.putExtra("time",time );
         startActivity(intent);
         finish();
     }

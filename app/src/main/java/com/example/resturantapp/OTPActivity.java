@@ -59,15 +59,16 @@ public class OTPActivity extends AppCompatActivity {
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             verificationId = s;
+
         }
 
         @Override
         public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-            code = phoneAuthCredential.getSmsCode();
+            /*code = phoneAuthCredential.getSmsCode();
             if (code != null) {
                 otp_edit_text.setText(code);
                 verifyCode(code);
-            }
+            }*/
         }
 
         @Override
@@ -125,22 +126,24 @@ public class OTPActivity extends AppCompatActivity {
     }
 
     private void signInWithCredential(PhoneAuthCredential credential) {
-        /*mAuth.signInWithCredential(credential)
+        mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             //extend(user_email, password);
-                            send_data(name, phoneNo, aadhaarNo,waiterId);
+                            send_data(name, phoneNo, aadhaarNo,waiterId,currentDate);
+                            Toast.makeText(OTPActivity.this,"successful", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(OTPActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(OTPActivity.this, CustomerDetailsActivity.class));
+                            Toast.makeText(OTPActivity.this, "recheck otp", Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(OTPActivity.this, TablesListActivity.class);
+                            intent.putExtra("t_name",t_name);
                             finish();
                         }
                     }
-                });*/
-        String otp_code = credential.getSmsCode();
-        if(otp_code.equals(code)){
+                });
+        //String otp_code = credential.getSmsCode();
+       /* if(otp_code.equals(code)){
             send_data(name, phoneNo, aadhaarNo,waiterId,currentDate);
         }
         else{
@@ -152,7 +155,7 @@ public class OTPActivity extends AppCompatActivity {
             Toast.makeText(OTPActivity.this, "Recheck OTP", Toast.LENGTH_SHORT).show();
         }
        //Toast.makeText(OTPActivity.this, credential.getSmsCode(), Toast.LENGTH_LONG).show();
-        //Toast.makeText(OTPActivity.this, code, Toast.LENGTH_LONG).show();
+        //Toast.makeText(OTPActivity.this, code, Toast.LENGTH_LONG).show();*/
 
 
     }
