@@ -151,8 +151,8 @@ public class OTPActivity extends AppCompatActivity {
             //Log.d("typed:",code);
             Toast.makeText(OTPActivity.this, "Recheck OTP", Toast.LENGTH_SHORT).show();
         }
-       Toast.makeText(OTPActivity.this, credential.getSmsCode(), Toast.LENGTH_LONG).show();
-        Toast.makeText(OTPActivity.this, code, Toast.LENGTH_LONG).show();
+       //Toast.makeText(OTPActivity.this, credential.getSmsCode(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(OTPActivity.this, code, Toast.LENGTH_LONG).show();
 
 
     }

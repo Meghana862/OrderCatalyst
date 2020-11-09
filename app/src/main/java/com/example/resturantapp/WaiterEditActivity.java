@@ -51,7 +51,7 @@ public class WaiterEditActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setTitle("Add Waiter");
+        actionBar.setTitle("Edit waiter details");
 
         Intent iin=getIntent();
         Bundle b=iin.getExtras();

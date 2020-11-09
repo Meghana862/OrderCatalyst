@@ -154,6 +154,18 @@ public class SessionsListActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
 
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Intent intent = new Intent(SessionsListActivity.this,RangePickActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
 }

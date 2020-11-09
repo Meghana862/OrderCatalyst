@@ -32,9 +32,7 @@ public class Menu extends AppCompatActivity {
         drinks = findViewById(R.id.drinks);
 
         actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setTitle("Menu");
+        actionBar.hide();
 
         Intent iin=getIntent();
         Bundle b=iin.getExtras();

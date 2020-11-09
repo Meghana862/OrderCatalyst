@@ -35,6 +35,7 @@ public class CateorywiseItemsActivity extends AppCompatActivity {
     private FloatingActionButton show_desc_Btn;
     private String category;
     private String time;
+    private String t_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class CateorywiseItemsActivity extends AppCompatActivity {
         if(b!=null){
             category=(String)b.get("category");
             time=(String)b.get("time");
+            t_name=(String)b.get("t_name");
         }
 
         actionBar = getSupportActionBar();
@@ -76,6 +78,7 @@ public class CateorywiseItemsActivity extends AppCompatActivity {
 
                 Intent intent=new Intent(CateorywiseItemsActivity.this, com.example.resturantapp.Menu.class);
                 intent.putExtra("time",time );
+                intent.putExtra("t_name",t_name );
                 startActivity(intent);
 
             }
@@ -132,5 +135,17 @@ public class CateorywiseItemsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
 
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Intent intent = new Intent(CateorywiseItemsActivity.this, com.example.resturantapp.Menu.class);
+        startActivity(intent);
+        finish();
+    }
 }

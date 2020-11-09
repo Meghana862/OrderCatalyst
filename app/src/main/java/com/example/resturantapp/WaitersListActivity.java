@@ -34,6 +34,8 @@ public class WaitersListActivity extends AppCompatActivity {
     private ArrayList<ModelWaitersList> waitersLists;
     private AdapterWaitersList adapterwaitersList;
     private FloatingActionButton show_desc_Btn;
+    private long backPressedTime;
+    private Toast backToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +45,6 @@ public class WaitersListActivity extends AppCompatActivity {
         myrecyclerview = findViewById(R.id.usersRv111);
 
         actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setTitle("Waiters List");
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -124,6 +124,24 @@ public class WaitersListActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+
+        if(backPressedTime+2000>System.currentTimeMillis()){
+            backToast.cancel();
+            super.onBackPressed();;
+            return;
+        }
+        else{
+            backToast=Toast.makeText(getBaseContext(),"Press back again to exit",Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+        backPressedTime=System.currentTimeMillis();
+        /*Intent intent = new Intent(home.this,home.class);
+        startActivity(intent);
+        finish();*/
     }
 
 

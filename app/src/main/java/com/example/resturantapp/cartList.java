@@ -56,8 +56,7 @@ public class cartList extends AppCompatActivity {
             t_name=(String)b.get("t_name");
         }
         actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.hide();
 
         firebaseAuth = FirebaseAuth.getInstance();
         myrecyclerview = findViewById(R.id.usersRv111);
@@ -136,8 +135,9 @@ public class cartList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent=new Intent(cartList.this, com.example.resturantapp.Menu.class);
+                Intent intent=new Intent(cartList.this, Menu.class);
                 intent.putExtra("time",time );
+                intent.putExtra("t_name",t_name );
                 startActivity(intent);
 
             }

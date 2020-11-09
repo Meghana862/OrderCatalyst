@@ -1,6 +1,7 @@
 package com.example.resturantapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -38,6 +39,7 @@ public class CustomerDetailsActivity extends AppCompatActivity {
     private EditText cAadhaar;
     private Button btn;
     String t_name;
+    private ActionBar actionBar;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore db;
@@ -52,6 +54,9 @@ public class CustomerDetailsActivity extends AppCompatActivity {
         cAadhaar=findViewById(R.id.aadharno);
         btn=findViewById(R.id.button1);
         db = FirebaseFirestore.getInstance();
+
+        actionBar = getSupportActionBar();
+        actionBar.hide();
 
         Intent iin=getIntent();
         Bundle b=iin.getExtras();

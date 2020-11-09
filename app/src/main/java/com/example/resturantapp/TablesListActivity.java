@@ -37,6 +37,8 @@ public class TablesListActivity extends AppCompatActivity {
     private AdapterEmptyTablesList adapteremptytablesList;
     private FloatingActionButton show_desc_Btn;
     private Button log;
+    private long backPressedTime;
+    private Toast backToast;
 
 
     @Override
@@ -49,8 +51,6 @@ public class TablesListActivity extends AppCompatActivity {
         log=findViewById(R.id.log);
 
         actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setTitle("Tables List");
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -146,7 +146,23 @@ public class TablesListActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    public void onBackPressed(){
 
+        if(backPressedTime+2000>System.currentTimeMillis()){
+            backToast.cancel();
+            super.onBackPressed();;
+            return;
+        }
+        else{
+            backToast=Toast.makeText(getBaseContext(),"Press back again to exit",Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+        backPressedTime=System.currentTimeMillis();
+        /*Intent intent = new Intent(home.this,home.class);
+        startActivity(intent);
+        finish();*/
+    }
 
 
 }
